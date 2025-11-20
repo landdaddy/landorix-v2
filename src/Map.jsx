@@ -17,10 +17,9 @@ export default function Map({ darkMode }) {
       style: darkMode ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/satellite-streets-v12',
       center: [0, 20],
       zoom: 1.8,
-      pitch: 0, // Flat for fast load
-      bearing: 0
-    });
-
+      pitch: 45,
+      bearing: 0,
+      projection: 'globe'
     // 8-second zoom into Pinal County
     setTimeout(() => {
       map.current.flyTo({
