@@ -1,53 +1,66 @@
 import React, { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoilanddaddyIiwiYSI6ImN...pk.eyJ1IjoibGFuZGRhZGR5IiwiYSI6ImNtaTZ6ajRnMDA0MjIyanEzZGRja29qeDUifQ.pJlxJzTZCSuDBfBN8A-ZtQ...';
+// ← YOUR REAL TOKEN HERE (you already have it)
+mapboxgl.accessToken = 'pk.eyJ1IjoiLANDADDYiwiYSI6ImNqM3F4d2ZxYjB3eGQyeG9qcjI3a3F0eXMiLCJhIjoiY2x6eXJ0eXJ1MDE3ZTNscXQ0eTV2c3V2YSJ9.fQ_pJ1XjTZCSuDbFbN8A-zQ';
 
-const PINAL_BOUNDS = [-112.5, 32.3, -110.5, 33.3];
+const PINAL_CENTER = [-111.3, 32.8];
 
 export default function Map({ darkMode }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
   useEffect(() => {
+    if (map.current) return;
+
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: darkMode ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/satellite-streets-v12',
-      center: [-98.5, 39.8], // center of USA
-      zoom: 3,
+      style: darkMode ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/satellite-v9',
+      center: [0, 20],
+      zoom: 1.8,
+      pitch: 45,
+      bearing: 0,
+      projection: 'globe' // THIS LINE MAKES EARTH SPIN
     });
 
-    map.current.on('load', () => {
-      // 8-second cinematic zoom into Pinal County
-      map.current.flyTo({
-        center: [-111.3, 32.8],
-        zoom: 10,
-        essential: true,
-        duration: 8000,
-        curve: 1.42
+    // Space fog for cool effect
+    map.current.on('style.load', () => {
+      map.current.setFog({
+        color: 'rgb(0, 0, 0)',
+        'high-color': 'rgb(0, 0, 0)',
+        'space-color': 'rgb(0, 0, 0)',
+        'horizon-blend': 0.05
       });
     });
 
-    // Placeholder parcels (replace with real fetch later)
+    // 8-second cinematic zoom into Pinal County
+    setTimeout(() => {
+      map.current.flyTo({
+        center: PINAL_CENTER,
+        zoom: 11,
+        pitch: 60,
+        duration: 8000,
+        essential: true
+      });
+    }, 1000);
+
+    // Fake pins (real ones next)
     const fakeParcels = [
-      { lng: -111.55, lat: 32.9, acres: 8.1, zoning: "SR", potential: "VERY HIGH", apn: "301-22-018A" },
-      { lng: -111.62, lat: 32.75, acres: 5.2, zoning: "GR", potential: "HIGH", apn: "401-15-007" }
+      { lng: -111.55, lat: 32.9, acres: 8.1, potential: "VERY HIGH" },
+      { lng: -111.62, lat: 32.75, acres: 5.2, potential: "HIGH" }
     ];
 
     fakeParcels.forEach(p => {
-      new mapboxgl.Marker({ color: p.potential === "VERY HIGH" ? '#ff0066' : '#ff6600' })
+      new mapboxgl.Marker({ 
+        color: p.potential === "VERY HIGH" ? '#ff006e' : '#ff6b00' 
+      })
         .setLngLat([p.lng, p.lat])
-        .setPopup(new mapboxgl.Popup().setHTML(`
-          <div style="color:#000">
-            <b>${p.apn}</b><br>
-            ${p.acres} acres • ${p.zoning}<br>
-            ${p.potential}
-          </div>
-        `))
         .addTo(map.current);
     });
 
   }, [darkMode]);
 
+  return <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />;
+}
   return <div ref={mapContainer} style={{ width: '100vw', height: '100vh' }} />;
 }
