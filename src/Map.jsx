@@ -14,7 +14,7 @@ export default function Map({ darkMode }) {
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: darkMode ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/satellite-v9',
+      style: darkMode ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/satellite-streets-v12',
       center: [0, 20],
       zoom: 1.8,
       pitch: 45,
