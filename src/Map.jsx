@@ -10,27 +10,20 @@ export default function Map({ darkMode }) {
   const map = useRef(null);
 
   useEffect(() => {
-    if (map.current) return;
+  if (map.current) return;
 
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: darkMode ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/streets-v12',
-      center: [0, 20],
-      zoom: 1.8,
-      pitch: 45,
-      bearing: 0,
-      projection: 'globe'
-    // 8-second zoom into Pinal County
-    setTimeout(() => {
-      map.current.flyTo({
-        center: PINAL_CENTER,
-        zoom: 11,
-        duration: 8000,
-        essential: true
-      });
-    }, 1000);
+  console.log('Creating map — flat mode for instant load');
+  map.current = new mapboxgl.Map({
+    container: mapContainer.current,
+    style: 'mapbox://styles/mapbox/satellite-streets-v12',
+    center: PINAL_CENTER,
+    zoom: 11,
+    pitch: 0,
+    bearing: 0
+  });
 
-    // Fake pins
+  map.current.on('load', () => {
+    console.log('Map loaded — adding fake pins');
     const fakeParcels = [
       { lng: -111.55, lat: 32.9, acres: 8.1, potential: "VERY HIGH" },
       { lng: -111.62, lat: 32.75, acres: 5.2, potential: "HIGH" }
@@ -41,8 +34,9 @@ export default function Map({ darkMode }) {
         .setLngLat([p.lng, p.lat])
         .addTo(map.current);
     });
+  });
 
-  }, [darkMode]);
+}, [darkMode]);
 
   return <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />;
 }
