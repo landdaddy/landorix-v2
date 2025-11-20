@@ -17,42 +17,28 @@ export default function Map({ darkMode }) {
       style: darkMode ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/satellite-streets-v12',
       center: [0, 20],
       zoom: 1.8,
-      pitch: 45,
-      bearing: 0,
-      projection: 'globe' // THIS LINE MAKES EARTH SPIN
+      pitch: 0, // Flat for fast load
+      bearing: 0
     });
 
-    // Space fog for cool effect
-    map.current.on('style.load', () => {
-      map.current.setFog({
-        color: 'rgb(0, 0, 0)',
-        'high-color': 'rgb(0, 0, 0)',
-        'space-color': 'rgb(0, 0, 0)',
-        'horizon-blend': 0.05
-      });
-    });
-
-    // 8-second cinematic zoom into Pinal County
+    // 8-second zoom into Pinal County
     setTimeout(() => {
       map.current.flyTo({
         center: PINAL_CENTER,
         zoom: 11,
-        pitch: 60,
         duration: 8000,
         essential: true
       });
     }, 1000);
 
-    // Fake pins (real ones next)
+    // Fake pins
     const fakeParcels = [
       { lng: -111.55, lat: 32.9, acres: 8.1, potential: "VERY HIGH" },
       { lng: -111.62, lat: 32.75, acres: 5.2, potential: "HIGH" }
     ];
 
     fakeParcels.forEach(p => {
-      new mapboxgl.Marker({ 
-        color: p.potential === "VERY HIGH" ? '#ff006e' : '#ff6b00' 
-      })
+      new mapboxgl.Marker({ color: p.potential === "VERY HIGH" ? '#ff006e' : '#ff6b00' })
         .setLngLat([p.lng, p.lat])
         .addTo(map.current);
     });
@@ -60,6 +46,4 @@ export default function Map({ darkMode }) {
   }, [darkMode]);
 
   return <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />;
-}
-  return <div ref={mapContainer} style={{ width: '100vw', height: '100vh' }} />;
 }
