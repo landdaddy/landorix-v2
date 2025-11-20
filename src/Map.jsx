@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoibGFuZG9yaXgiLCJhIjoiY202a3N3In0.fake'; // we’ll replace with real key
+mapboxgl.accessToken = 'pk.eyJ1IjoilanddaddyIiwiYSI6ImN...pk.eyJ1IjoibGFuZGRhZGR5IiwiYSI6ImNtaTZ6ajRnMDA0MjIyanEzZGRja29qeDUifQ.pJlxJzTZCSuDBfBN8A-ZtQ...';
 
 const PINAL_BOUNDS = [-112.5, 32.3, -110.5, 33.3];
 
