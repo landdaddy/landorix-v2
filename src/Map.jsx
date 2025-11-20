@@ -15,7 +15,7 @@ export default function Map({ darkMode }) {
   console.log('Creating map — flat mode for instant load');
   map.current = new mapboxgl.Map({
     container: mapContainer.current,
-    style: 'mapbox://styles/mapbox/satellite-streets-v12',
+    style: 'mapbox://styles/mapbox/streets-v12',
     center: PINAL_CENTER,
     zoom: 11,
     pitch: 0,
