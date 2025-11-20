@@ -1,8 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 
-// ← YOUR REAL TOKEN HERE (you already have it)
-mapboxgl.accessToken = 'pk.eyJ1IjoiLANDADDYiwiYSI6ImNqM3F4d2ZxYjB3eGQyeG9qcjI3a3F0eXMiLCJhIjoiY2x6eXJ0eXJ1MDE3ZTNscXQ0eTV2c3V2YSJ9.fQ_pJ1XjTZCSuDbFbN8A-zQ';
+mapboxgl.accessToken = 'pk.eyJ1IjoibGFuZGRhZGR5IiwiYSI6ImNtaTZ6ajRnMDA0MjIyanEzZGRja29qeDUifQ.pJlxJzTZCSuDBfBN8A-ZtQ';
 
 const PINAL_CENTER = [-111.3, 32.8];
 
