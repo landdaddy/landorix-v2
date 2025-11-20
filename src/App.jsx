@@ -8,9 +8,13 @@ export default function App() {
   const [showIntro, setShowIntro] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowIntro(false), 5000);
-    return () => clearTimeout(timer);
-  }, []);
+  console.log('Intro timer starting');
+  const timer = setTimeout(() => {
+    console.log('Timer fired — hiding loader');
+    setShowIntro(false);
+  }, 3000); // 3 seconds for fast test
+  return () => clearTimeout(timer);
+}, []);
 
   return (
     <>
