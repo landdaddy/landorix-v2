@@ -20,6 +20,7 @@ export default function Map({ darkMode }) {
     zoom: 11,
     pitch: 0,
     bearing: 0
+    projection: 'globe',
   });
 
   map.current.on('load', () => {
